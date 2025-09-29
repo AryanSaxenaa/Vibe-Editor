@@ -16,7 +16,7 @@
 ## Links
 
 - 📦 **NPM Package Page**: [npmjs.com/package/vibedit](https://www.npmjs.com/package/vibedit)
-- ⬇️ **Direct Download**: [vibedit-1.0.0.tgz](https://registry.npmjs.org/vibedit/-/vibedit-1.0.0.tgz)
+- ⬇️ **Direct Download**: [vibedit-1.0.1.tgz](https://registry.npmjs.org/vibedit/-/vibedit-1.0.1.tgz)
 - 🐙 **GitHub Repository**: [github.com/AryanSaxenaa/Vibe-Editor](https://github.com/AryanSaxenaa/Vibe-Editor)
 - 🐛 **Issues & Support**: [GitHub Issues](https://github.com/AryanSaxenaa/Vibe-Editor/issues)
 
