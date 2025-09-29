@@ -1,13 +1,24 @@
 # Vibedit - Conversational AI Video Editor
 
+[![Published NPM Package](https://img.shields.io/badge/Published-NPM%20Package-success?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/vibedit)
+
 > AI-powered video editing through natural language conversation
 
 **Vibedit** is a command-line tool that transforms video editing into a natural conversation. Describe what you want to do with your video in plain English, and let AI handle the complex FFmpeg commands behind the scenes.
+
+**🎉 Successfully Published**: Available as an NPM package for global installation and use.
 
 [![npm version](https://badge.fury.io/js/vibedit.svg)](https://www.npmjs.com/package/vibedit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-blue.svg)](https://nodejs.org/)
 [![FFmpeg](https://img.shields.io/badge/FFmpeg-Required-red.svg)](https://ffmpeg.org/)
+
+## Links
+
+- 📦 **NPM Package Page**: [npmjs.com/package/vibedit](https://www.npmjs.com/package/vibedit)
+- ⬇️ **Direct Download**: [vibedit-1.0.0.tgz](https://registry.npmjs.org/vibedit/-/vibedit-1.0.0.tgz)
+- 🐙 **GitHub Repository**: [github.com/AryanSaxenaa/Vibe-Editor](https://github.com/AryanSaxenaa/Vibe-Editor)
+- 🐛 **Issues & Support**: [GitHub Issues](https://github.com/AryanSaxenaa/Vibe-Editor/issues)
 
 ## Features
 
@@ -43,16 +54,24 @@ npm install -g vibedit
 ### Prerequisites
 
 - **Node.js 18+** - [Download](https://nodejs.org/)
-- **FFmpeg** - [Installation guide](https://ffmpeg.org/download.html)
+- **FFmpeg** - Required for video processing (installation guidance provided during setup)
 - **Groq API Key** - [Get free key](https://console.groq.com/)
 
-### Usage
+### Setup & Usage
 
 ```bash
 vibedit
 ```
 
-On first run, you'll be prompted to enter your Groq API key. The tool will guide you through the setup process.
+**Automatic Setup Assistance:**
+- On installation, the postinstall script checks for FFmpeg and provides platform-specific installation instructions
+- On first run, you'll be prompted to enter your Groq API key
+- The tool guides you through the complete setup process
+
+**FFmpeg Installation (if needed):**
+- **Windows**: `winget install ffmpeg` or download from [ffmpeg.org](https://ffmpeg.org/)
+- **macOS**: `brew install ffmpeg`
+- **Linux**: `sudo apt install ffmpeg`
 
 ## Examples
 
@@ -132,6 +151,12 @@ What would you like to do with your video?
 - HH:MM:SS: `1:15:30`, `0:02:15`
 
 ## Configuration
+
+### Automatic Setup (Post-Install)
+When you install vibedit, the postinstall script automatically:
+- **Checks for FFmpeg** - Detects if FFmpeg is already installed on your system
+- **Provides Installation Guidance** - Shows platform-specific commands to install FFmpeg if needed
+- **Setup Instructions** - Displays next steps to get started with Vibedit
 
 ### API Key Setup
 On first run, Vibedit will prompt you to enter your Groq API key:
