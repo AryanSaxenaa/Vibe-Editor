@@ -1,11 +1,19 @@
 {
   "name": "vibedit",
   "version": "1.0.0",
-  "description": "Conversational video editor - describe what you want in plain English",
+  "description": "Conversational AI video editor - describe what you want in plain English. No menus, no templates - just natural conversation!",
   "main": "vibedit.js",
   "type": "module",
   "bin": {
-    "vibedit": "./vibedit.js"
+    "vibedit": "vibedit.js"
+  },
+  "homepage": "https://github.com/AryanSaxenaa/Vibe-Editor",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AryanSaxenaa/Vibe-Editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AryanSaxenaa/Vibe-Editor/issues"
   },
   "scripts": {
     "postinstall": "node postinstall.js",
@@ -15,8 +23,23 @@
     "clean": "powershell \"Remove-Item *.mp4, *.mp3, *.avi, *.mov, *.mkv, *.gif, *.webm -Force -ErrorAction SilentlyContinue\"",
     "demo": "echo 'Vibedit Demo: Interactive AI video processing - just run: node vibedit.js'"
   },
-  "keywords": ["cli", "ffmpeg", "ai", "video", "hackathon", "interactive", "vibedit"],
-  "author": "Hackathon Team",
+  "keywords": [
+    "cli",
+    "ffmpeg",
+    "ai",
+    "video",
+    "video-editing",
+    "conversational",
+    "interactive",
+    "natural-language",
+    "groq",
+    "automation",
+    "media-processing"
+  ],
+  "author": {
+    "name": "AryanSaxenaa",
+    "url": "https://github.com/AryanSaxenaa"
+  },
   "license": "MIT",
   "dependencies": {
     "groq-sdk": "^0.32.0"

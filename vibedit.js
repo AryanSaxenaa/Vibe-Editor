@@ -7,7 +7,7 @@ import Groq from 'groq-sdk';
 
 const VERSION = '1.0.0';
 const colors = { reset: '\x1b[0m', bright: '\x1b[1m', dim: '\x1b[2m', red: '\x1b[31m', green: '\x1b[32m', yellow: '\x1b[33m', blue: '\x1b[34m', magenta: '\x1b[35m', cyan: '\x1b[36m', white: '\x1b[37m' };
-const symbols = { success: '✅', error: '❌', processing: '⚙️', film: '🎬', magic: '✨', rocket: '🚀', thinking: '🤔' };
+const symbols = { success: '[SUCCESS]', error: '[ERROR]', processing: '[PROCESSING]', film: '[VIBEDIT]', magic: '[DONE]', rocket: '[COMPLETE]', thinking: '[THINKING]' };
 
 class Vibedit {
     constructor() { 
@@ -65,51 +65,41 @@ class Vibedit {
         if (!this.groq) {
             const CONFIG_PATH = join(homedir(), '.vibedit-config.json');
             let apiKey = '';
-            
-            // Try to load existing API key
             if (existsSync(CONFIG_PATH)) {
                 try { 
                     const config = JSON.parse(readFileSync(CONFIG_PATH, 'utf8'));
                     apiKey = config.groqApiKey || '';
                 } catch {
-                    // Legacy format fallback - check old location
                     const oldPath = join(homedir(), '.vibedit');
                     if (existsSync(oldPath) && statSync(oldPath).isFile()) {
                         try { apiKey = readFileSync(oldPath, 'utf8').trim().split('=')[1] || ''; } catch {}
                     }
                 }
             }
-            
-            // If no key found, guide user through setup
             if (!apiKey) {
-                this.log('\n🔑 API Key Setup Required', 'yellow');
+                this.log('API Key Setup Required', 'yellow');
                 this.log('Vibedit uses Groq AI for natural language understanding.', 'white');
                 this.log('1. Get a FREE API key: https://console.groq.com/', 'cyan');
-                this.log('2. Create account → API Keys → Create API Key', 'white');
-                this.log('3. Copy the key and paste it below\n', 'white');
-                
-                apiKey = await this.ask('🔑 Paste your Groq API key here:');
+                this.log('2. Create account -> API Keys -> Create API Key', 'white');
+                this.log('3. Copy the key and paste it below', 'white');
+                apiKey = await this.ask('Paste your Groq API key here:');
                 if (!apiKey || apiKey.length < 10) {
                     throw new Error('Invalid API key. Please get one from https://console.groq.com/');
                 }
-                
-                // Save the key in JSON format for better management
                 const config = {
                     groqApiKey: apiKey.trim(),
                     setupDate: new Date().toISOString(),
                     version: '1.0.0'
                 };
                 writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2));
-                this.success('✅ API key saved! You\'re all set!');
+                this.success('API key saved! You\'re all set!');
             }
-            
             this.groq = new Groq({ apiKey });
         }
     }
 
     async intelligentParsing(userInput, videoFile, videoInfo) {
         this.thinking('Understanding your request...');
-        
         const prompt = `You are Vibedit, an AI video editor that uses FFmpeg commands. 
 
 VIDEO INFO:
@@ -154,7 +144,6 @@ Respond with JSON only:`;
             temperature: 0.1,
             max_tokens: 500
         });
-        
         try {
             return JSON.parse(completion.choices[0]?.message?.content?.trim() || '{}');
         } catch (e) {
@@ -168,12 +157,10 @@ Respond with JSON only:`;
 
     async handleFollowUpQuestions(questions, originalInput, videoFile, videoInfo) {
         let responses = [];
-        
         for (const question of questions) {
             const answer = await this.ask(question);
             responses.push(answer);
         }
-        
         const prompt = `Original request: "${originalInput}"
 Additional info provided: ${responses.join(', ')}
 
@@ -181,7 +168,6 @@ VIDEO INFO: ${videoFile}, ${Math.round(videoInfo.duration)}s, ${videoInfo.width}
 
 Generate the final FFmpeg operation in JSON format:
 {"understood": true, "operation": "description", "ffmpeg": "command_without_input_output", "output_ext": ".mp4"}`;
-        
         this.thinking('Processing your answers...');
         const completion = await this.groq.chat.completions.create({
             messages: [{ role: 'user', content: prompt }],
@@ -189,16 +175,12 @@ Generate the final FFmpeg operation in JSON format:
             temperature: 0.1,
             max_tokens: 300
         });
-        
         try {
             return JSON.parse(completion.choices[0]?.message?.content?.trim() || '{}');
         } catch (e) {
             throw new Error('Could not process your request. Please try again.');
         }
     }
-
-
-
     async analyzeVideo(filePath) {
         return new Promise((resolve, reject) => {
             const cmd = `ffprobe -v quiet -print_format json -show_format -show_streams "${filePath}"`;
@@ -231,7 +213,7 @@ Generate the final FFmpeg operation in JSON format:
             unlinkSync(CONFIG_PATH);
         }
         this.groq = null;
-        this.success('✅ API key reset! You\'ll be prompted for a new one.');
+        this.success('API key reset! You\'ll be prompted for a new one.');
     }
 
     async executeCommand(command) {
@@ -254,10 +236,8 @@ Generate the final FFmpeg operation in JSON format:
     async run() {
         try {
             console.log(`${colors.bright}${colors.cyan}${symbols.film} Vibedit ${VERSION}${colors.reset} - AI-Powered Video Editor`);
-            console.log(`${colors.dim}Just tell me what you want to do - I'll figure it out! ${colors.reset}\n`);
-            
+            console.log(`${colors.dim}Just tell me what you want to do - I'll figure it out! ${colors.reset}`);
             await this.ensureApiKey();
-            
             while (true) {
                 const input = await this.ask('What would you like to do with your video?');
                 if (!input || ['quit', 'exit', 'bye', 'done', 'stop'].some(w => input.toLowerCase().includes(w))) {
@@ -269,39 +249,29 @@ Generate the final FFmpeg operation in JSON format:
                     this.showExamples(); 
                     continue;
                 }
-                
-                // Check for API key reset command
                 if (input.toLowerCase().includes('reset api key') || input.toLowerCase().includes('change api key')) {
                     await this.resetApiKey();
                     continue;
                 }
-                
                 const videoFile = await this.getVideoFile(input);
                 const videoInfo = await this.analyzeVideo(videoFile);
-                
                 let result = await this.intelligentParsing(input, videoFile, videoInfo);
-                
-                // Handle follow-up questions or unsupported operations
                 if (!result.understood) {
                     if (result.questions) result = await this.handleFollowUpQuestions(result.questions, input, videoFile, videoInfo);
                     if (!result.understood) {
                         if (result.error) this.error(result.error);
                         if (result.alternatives) {
-                            this.log('\n💡 Try these instead:', 'yellow');
+                            this.log('Try these instead:', 'yellow');
                             result.alternatives.forEach(alt => this.log(`   ${alt}`, 'white'));
                         }
                         continue;
                     }
                 }
-                
-                // Execute the command
                 const outputFile = this.generateOutputName(videoFile, result.operation, result.output_ext);
                 const fullCommand = this.buildFullCommand(videoFile, result.ffmpeg, outputFile);
-                
                 this.processing(`${result.operation}`);
                 await this.executeCommand(fullCommand);
                 this.success(`${symbols.rocket} Done! Saved as: ${outputFile}`);
-                console.log();
             }
         } catch (error) {
             this.error(error.message);
@@ -311,27 +281,27 @@ Generate the final FFmpeg operation in JSON format:
     }
 
     showExamples() {
-        this.log('\n🎯 Just describe what you want naturally:', 'cyan');
+        this.log('Just describe what you want naturally:', 'cyan');
         this.log('   "Make my vacation video black and white"', 'white');
         this.log('   "Convert file3.mp4 to any other video format"', 'white');
         this.log('   "Speed up by 2.5x and extract audio"', 'white');
         this.log('   "Resize to Instagram size and compress"', 'white');
         this.log('   "Extract the best 30 seconds from minute 2"', 'white');
-        this.log('\n🔧 Special commands:', 'yellow');
+        this.log('Special commands:', 'yellow');
         this.log('   "reset api key" - Change your Groq API key', 'white');
-        this.log('\n✨ I understand natural language - no need to memorize commands!', 'magenta');
+        this.log('I understand natural language - no need to memorize commands!', 'magenta');
     }
 }
 
 const args = process.argv.slice(2);
 if (args.includes('--help') || args.includes('-h')) {
     console.log(`${colors.bright}${colors.cyan}Vibedit ${VERSION}${colors.reset} - AI-Powered Video Editor`);
-    console.log(`${colors.dim}Usage: vibedit${colors.reset}\n`);
+    console.log(`${colors.dim}Usage: vibedit${colors.reset}`);
     console.log(`${colors.yellow}Examples:${colors.reset}`);
     console.log(`  "Convert my video to MP4 format"`);
     console.log(`  "Speed up vacation.mov by 3x"`);
     console.log(`  "Extract 45 seconds starting from 2:30"`);
-    console.log(`\n${colors.cyan}💫 Powered by AI - understands natural language!${colors.reset}`);
+    console.log(`${colors.cyan}Powered by AI - understands natural language!${colors.reset}`);
     process.exit(0);
 }
 

@@ -1,0 +1,33 @@
+# Development files
+.git/
+.gitignore
+*.log
+.env*
+
+# Test files
+*test*.js
+test-*
+
+# Video files
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+*.flv
+*.m4v
+*.gif
+
+# Documentation that's not needed in package
+DEMO_GUIDE.md
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache
+node_modules/.cache/

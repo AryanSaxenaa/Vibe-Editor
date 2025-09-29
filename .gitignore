@@ -48,6 +48,20 @@ Thumbs.db
 !.vscode/extensions.json
 !.vscode/settings.json
 !.vscode/launch.json
+
+# Video files (for testing/demo)
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+*.flv
+*.m4v
+*.gif
+
+# Test files
+*test*.js
+test-*
 !.vscode/tasks.json
 *.suo
 *.ntvs*
