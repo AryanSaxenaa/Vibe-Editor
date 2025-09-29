@@ -8,7 +8,7 @@
 
 Available as an NPM package for global installation and use.
 
-[![npm version](https://badge.fury.io/js/vibedit.svg)](https://www.npmjs.com/package/vibedit)
+[![npm version](https://badge.fury.io/js/vibedit.svg)](https://www.npmjs.com/package/vibedit/v/1.0.1)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-blue.svg)](https://nodejs.org/)
 [![FFmpeg](https://img.shields.io/badge/FFmpeg-Required-red.svg)](https://ffmpeg.org/)
