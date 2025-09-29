@@ -6,7 +6,7 @@
 
 **Vibedit** is a command-line tool that transforms video editing into a natural conversation. Describe what you want to do with your video in plain English, and let AI handle the video editing behind the scenes.
 
-**🎉 Successfully Published**: Available as an NPM package for global installation and use.
+Available as an NPM package for global installation and use.
 
 [![npm version](https://badge.fury.io/js/vibedit.svg)](https://www.npmjs.com/package/vibedit)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
