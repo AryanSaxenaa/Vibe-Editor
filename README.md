@@ -4,7 +4,7 @@
 
 > AI-powered video editing through natural language conversation
 
-**Vibedit** is a command-line tool that transforms video editing into a natural conversation. Describe what you want to do with your video in plain English, and let AI handle the complex FFmpeg commands behind the scenes.
+**Vibedit** is a command-line tool that transforms video editing into a natural conversation. Describe what you want to do with your video in plain English, and let AI handle the video editing behind the scenes.
 
 **🎉 Successfully Published**: Available as an NPM package for global installation and use.
 
