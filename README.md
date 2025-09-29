@@ -1,6 +1,6 @@
 # Vibedit - Conversational AI Video Editor
 
-[![Published NPM Package](https://img.shields.io/badge/Published-NPM%20Package-success?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/vibedit)
+[![Published NPM Package](https://img.shields.io/badge/Published-NPM%20Package-success?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/vibedit/v/1.0.1)
 
 > AI-powered video editing through natural language conversation
 
