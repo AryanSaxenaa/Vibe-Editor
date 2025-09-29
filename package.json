@@ -1,6 +1,6 @@
 {
   "name": "vibedit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Conversational AI video editor - describe what you want in plain English. No menus, no templates - just natural conversation!",
   "main": "vibedit.js",
   "type": "module",
